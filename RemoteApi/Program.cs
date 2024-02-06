@@ -8,6 +8,11 @@ builder.Services
   .AddGarageComponents()
   .AddNatsRemote(builder.Configuration);
 
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowAnyOrigin()));
+
 //From NET8.0 they started to use port 8080 and 8081 as default ports for http and https
 if (builder.Environment.IsProduction())
 {
@@ -22,6 +27,8 @@ builder.Services.AddSwaggerGen();
 
 WebApplication app = builder.Build();
 
+app.UseCors();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -29,7 +36,7 @@ if (app.Environment.IsDevelopment())
 _ = app.UseSwagger();
 _ = app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.MapPost("/opendoor", async (IRemote handler) =>
 {
