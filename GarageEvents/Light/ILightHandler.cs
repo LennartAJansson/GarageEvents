@@ -1,9 +1,6 @@
 ﻿namespace GarageEvents.Light;
+using GarageEvents.Base;
 
-using GarageEvents.Remote;
-
-public interface ILightHandler
+public interface ILightHandler : IListener
 {
-  LightHandler StartListen(RemoteActionDelegate callback);
-  void StopListen();
 }

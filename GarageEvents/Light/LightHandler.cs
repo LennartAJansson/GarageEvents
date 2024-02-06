@@ -1,5 +1,6 @@
 ﻿namespace GarageEvents.Light;
 
+using GarageEvents.Base;
 using GarageEvents.Messages;
 using GarageEvents.Remote;
 using GarageEvents.Types;
@@ -7,33 +8,34 @@ using GarageEvents.Types;
 using Microsoft.Extensions.Logging;
 
 //Implementation for interacting with the light
-public class LightHandler(ILogger<LightHandler> logger, IRemote remote) : ILightHandler
+public class LightHandler : Listener, ILightHandler
 {
-  private RemoteActionDelegate? callback;
+  private readonly ILogger<LightHandler> logger;
+  private readonly IRemote remote;
+  private readonly RemoteActionDelegate? callback;
 
-  public LightHandler StartListen(RemoteActionDelegate callback)
+  public LightHandler(ILogger<LightHandler> logger, IRemote remote)
+    : base(remote)
   {
-    this.callback = callback;
-    remote.RemoteEvent += OnRemoteEvent;
-    remote.RemoteEvent += callback;
+    this.logger = logger;
+    this.remote = remote;
+  }
+
+  public override LightHandler StartListen(RemoteActionDelegate? callback)
+  {
+    _ = base.StartListen(callback);
     return this;
   }
 
-  public void StopListen()
-  {
-    remote.RemoteEvent -= callback;
-    remote.RemoteEvent -= OnRemoteEvent;
-  }
-
-  private void OnRemoteEvent(object sender, RemoteAction action)
+  public override void OnRemoteEvent(object sender, RemoteAction action)
   {
     switch (action.RemoteActionType)
     {
       case RemoteActionType.LightsOn:
-        logger.LogInformation("{time:G}: LightHandler is turning on lights", action.Time);
+        logger.LogInformation("{time:G}: Light is turning on", action.Time);
         break;
       case RemoteActionType.LightsOff:
-        logger.LogInformation("{time:G}: LightHandler is turning off lights", action.Time);
+        logger.LogInformation("{time:G}: Light is turning off", action.Time);
         break;
     }
   }

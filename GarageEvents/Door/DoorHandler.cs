@@ -1,5 +1,6 @@
 ﻿namespace GarageEvents.Door;
 
+using GarageEvents.Base;
 using GarageEvents.Messages;
 using GarageEvents.Remote;
 using GarageEvents.Types;
@@ -7,34 +8,30 @@ using GarageEvents.Types;
 using Microsoft.Extensions.Logging;
 
 //Implementation for interacting with the door
-public class DoorHandler(ILogger<DoorHandler> logger, IRemote remote) : IDoorHandler
+public class DoorHandler : Listener, IDoorHandler
 {
-  private RemoteActionDelegate? callback;
+  private readonly ILogger<DoorHandler> logger;
 
-  public DoorHandler StartListen(RemoteActionDelegate callback)
+  public DoorHandler(ILogger<DoorHandler> logger, IRemote remote)
+    : base(remote) => this.logger = logger;
+
+  public override DoorHandler StartListen(RemoteActionDelegate? callback)
   {
-    this.callback = callback;
-    remote.RemoteEvent += OnRemoteEvent;
-    remote.RemoteEvent += callback;
+    _ = base.StartListen(callback);
     return this;
   }
 
-  public void StopListen()
+  public override void OnRemoteEvent(object sender, RemoteAction action)
   {
-    remote.RemoteEvent -= callback;
-    remote.RemoteEvent -= OnRemoteEvent;
-  }
-
-  private void OnRemoteEvent(object sender, RemoteAction e)
-  {
-    switch (e.RemoteActionType)
+    switch (action.RemoteActionType)
     {
       case RemoteActionType.OpenDoor:
-        logger.LogInformation("{time:G}: DoorHandler is opening door", e.Time);
+        logger.LogInformation("{time:G}: Door is opening", action.Time);
         break;
       case RemoteActionType.CloseDoor:
-        logger.LogInformation("{time:G}: DoorHandler is closing door", e.Time);
+        logger.LogInformation("{time:G}: Door is closing", action.Time);
         break;
     }
   }
+
 }

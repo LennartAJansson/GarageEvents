@@ -1,12 +1,10 @@
 ﻿namespace GarageEvents.Garage;
 
-using GarageEvents.Remote;
+using GarageEvents.Base;
 
 //Interface for interacting with the garage
-public interface IGarageHandler
+public interface IGarageHandler : IListener
 {
   public bool DoorIsOpen { get; set; }
   public bool LightsAreOn { get; set; }
-  GarageHandler StartListen(RemoteActionDelegate callback);
-  void StopListen();
 }

@@ -36,10 +36,10 @@ public class Worker(ILogger<Worker> logger, IDoorHandler handler) : BackgroundSe
     switch (action.RemoteActionType)
     {
       case RemoteActionType.OpenDoor:
-        logger.LogInformation("{time:G}: DoorWorker is doing additional work for opening the door", action.Time);
+        logger.LogInformation("{time:G}: DoorWorker is doing work for opening the door", action.Time);
         break;
       case RemoteActionType.CloseDoor:
-        logger.LogInformation("{time:G}: DoorWorker is doing additional work for closing the door", action.Time);
+        logger.LogInformation("{time:G}: DoorWorker is doing work for closing the door", action.Time);
         break;
     }
   }

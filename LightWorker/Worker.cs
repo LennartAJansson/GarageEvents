@@ -36,10 +36,10 @@ public class Worker(ILogger<Worker> logger, ILightHandler handler) : BackgroundS
     switch (action.RemoteActionType)
     {
       case RemoteActionType.LightsOn:
-        logger.LogInformation("{time:G}: LightWorker is doing additional work for turning on lights", action.Time);
+        logger.LogInformation("{time:G}: LightWorker is doing work for turning on lights", action.Time);
         break;
       case RemoteActionType.LightsOff:
-        logger.LogInformation("{time:G}: LightWorker is doing additional work for turning off lights", action.Time);
+        logger.LogInformation("{time:G}: LightWorker is doing work for turning off lights", action.Time);
         break;
     }
   }

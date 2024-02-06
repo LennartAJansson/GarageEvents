@@ -18,15 +18,15 @@ using IServiceScope scope = host.Services.CreateScope();
 IRemote remote = scope.ServiceProvider
   .GetRequiredService<IRemote>();
 
-IDoorHandler door = scope.ServiceProvider
+IDoorHandler door = (IDoorHandler)scope.ServiceProvider
   .GetRequiredService<IDoorHandler>()
   .StartListen(Listener);
 
-ILightHandler light = scope.ServiceProvider
+ILightHandler light = (ILightHandler)scope.ServiceProvider
   .GetRequiredService<ILightHandler>()
   .StartListen(Listener);
 
-IGarageHandler garage = scope.ServiceProvider
+IGarageHandler garage = (IGarageHandler)scope.ServiceProvider
   .GetRequiredService<IGarageHandler>()
   .StartListen(Listener);
 

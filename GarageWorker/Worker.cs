@@ -36,16 +36,16 @@ public class Worker(ILogger<Worker> logger, IGarageHandler handler) : Background
     switch (action.RemoteActionType)
     {
       case RemoteActionType.LightsOn:
-        logger.LogInformation("{time:G}: GarageWorker is doing additional work for turning on lights", action.Time);
+        logger.LogInformation("{time:G}: GarageWorker is doing work for turning on lights", action.Time);
         break;
       case RemoteActionType.LightsOff:
-        logger.LogInformation("{time:G}: GarageWorker is doing additional work for turning off lights", action.Time);
+        logger.LogInformation("{time:G}: GarageWorker is doing work for turning off lights", action.Time);
         break;
       case RemoteActionType.OpenDoor:
-        logger.LogInformation("{time:G}: GarageWorker is doing additional work for opening the door", action.Time);
+        logger.LogInformation("{time:G}: GarageWorker is doing work for opening the door", action.Time);
         break;
       case RemoteActionType.CloseDoor:
-        logger.LogInformation("{time:G}: GarageWorker is doing additional work for closing the door", action.Time);
+        logger.LogInformation("{time:G}: GarageWorker is doing work for closing the door", action.Time);
         break;
     }
   }
