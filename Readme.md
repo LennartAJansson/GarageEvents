@@ -8,7 +8,7 @@ It also contains the implementation of the garage, the door, the light and a def
   
 The assembly GarageEvents.Nats contains an implementation of the IRemote interface that uses asynchronous event streaming to send the events between multiple applications. The idea is to be able to have one application for each part.  
 
-To be able to run the sample you will need to have a nats server running. You can download the server from [nats.io](https://nats.io/download/nats-io/nats-server/). Remember to start it with the commandline switch `--js` to enable the streaming server.  
+To be able to run the sample you will need to have a nats server running. You can download the server from [nats.io](https://github.com/nats-io/nats-server/releases/latest). Remember to start it with the commandline switch `--js` to enable the streaming server.  
   
 To show the full implementation there are four sample applications all taking care of each part of the scenario, one for the remote, one for the garage, one for the door and one for the light and they are using the event stream to talk with each others.  
 
