@@ -20,7 +20,7 @@ public class Worker(ILogger<Worker> logger, IGarage handler) : BackgroundService
       {
         logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
       }
-      await Task.Delay(1000, stoppingToken);
+      await Task.Delay(30000, stoppingToken);
     }
   }
 }
