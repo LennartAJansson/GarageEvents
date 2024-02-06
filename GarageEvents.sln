@@ -20,19 +20,97 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{0748AE38-B192-4C83-ACB8-FDBEE578827F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Playground", "Playground", "{0748AE38-B192-4C83-ACB8-FDBEE578827F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Magic part", "Magic part", "{A2453261-9C9E-4B82-A995-7AAE85A92EBC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{124D23BB-D8A9-4DDD-8AF7-BAD88085914C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageApi", "GarageApi\GarageApi.csproj", "{C536E1FB-73F4-4E6A-BCA7-8E4B0B023CE0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageWorker", "GarageWorker\GarageWorker.csproj", "{AB309EE0-9532-4EE9-9308-D55036A90DD5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoorWorker", "DoorWorker\DoorWorker.csproj", "{96CB00DA-E201-4EE0-8C2D-86E00ABC859D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightWorker", "LightWorker\LightWorker.csproj", "{551BF467-B448-4A61-9CA0-32C71D05854C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteApi", "RemoteApi\RemoteApi.csproj", "{6A3CE7DD-2218-4E8A-A2F7-00E3CA3F1B6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{44A1C42C-D48D-4ED4-9274-F108566B4E30}"
+	ProjectSection(SolutionItems) = preProject
+		BuildWithVersioning.ps1 = BuildWithVersioning.ps1
+		DeployWithVersioning.ps1 = DeployWithVersioning.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doorworker", "doorworker", "{0FBEE37A-A269-44DA-935F-962F64EE4039}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\doorworker\configmap.yaml = deploy\doorworker\configmap.yaml
+		deploy\doorworker\deployment.yaml = deploy\doorworker\deployment.yaml
+		deploy\doorworker\ingress.yaml = deploy\doorworker\ingress.yaml
+		deploy\doorworker\kustomization.yaml = deploy\doorworker\kustomization.yaml
+		deploy\doorworker\namespace.yaml = deploy\doorworker\namespace.yaml
+		deploy\doorworker\persistentvolume.yaml = deploy\doorworker\persistentvolume.yaml
+		deploy\doorworker\persistentvolumeclaim.yaml = deploy\doorworker\persistentvolumeclaim.yaml
+		deploy\doorworker\secret.yaml = deploy\doorworker\secret.yaml
+		deploy\doorworker\service.yaml = deploy\doorworker\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "garageworker", "garageworker", "{A2FD3647-F124-42C0-9E68-52546418D867}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\garageworker\configmap.yaml = deploy\garageworker\configmap.yaml
+		deploy\garageworker\deployment.yaml = deploy\garageworker\deployment.yaml
+		deploy\garageworker\ingress.yaml = deploy\garageworker\ingress.yaml
+		deploy\garageworker\kustomization.yaml = deploy\garageworker\kustomization.yaml
+		deploy\garageworker\namespace.yaml = deploy\garageworker\namespace.yaml
+		deploy\garageworker\persistentvolume.yaml = deploy\garageworker\persistentvolume.yaml
+		deploy\garageworker\persistentvolumeclaim.yaml = deploy\garageworker\persistentvolumeclaim.yaml
+		deploy\garageworker\secret.yaml = deploy\garageworker\secret.yaml
+		deploy\garageworker\service.yaml = deploy\garageworker\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lightworker", "lightworker", "{CF09C8E9-79A5-4BA4-85F5-1985009E6CEC}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\lightworker\configmap.yaml = deploy\lightworker\configmap.yaml
+		deploy\lightworker\deployment.yaml = deploy\lightworker\deployment.yaml
+		deploy\lightworker\ingress.yaml = deploy\lightworker\ingress.yaml
+		deploy\lightworker\kustomization.yaml = deploy\lightworker\kustomization.yaml
+		deploy\lightworker\namespace.yaml = deploy\lightworker\namespace.yaml
+		deploy\lightworker\persistentvolume.yaml = deploy\lightworker\persistentvolume.yaml
+		deploy\lightworker\persistentvolumeclaim.yaml = deploy\lightworker\persistentvolumeclaim.yaml
+		deploy\lightworker\secret.yaml = deploy\lightworker\secret.yaml
+		deploy\lightworker\service.yaml = deploy\lightworker\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "remoteapi", "remoteapi", "{9945BAC1-F0DE-4D65-9E74-B43C63C769D5}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\remoteapi\configmap.yaml = deploy\remoteapi\configmap.yaml
+		deploy\remoteapi\deployment.yaml = deploy\remoteapi\deployment.yaml
+		deploy\remoteapi\ingress.yaml = deploy\remoteapi\ingress.yaml
+		deploy\remoteapi\kustomization.yaml = deploy\remoteapi\kustomization.yaml
+		deploy\remoteapi\namespace.yaml = deploy\remoteapi\namespace.yaml
+		deploy\remoteapi\persistentvolume.yaml = deploy\remoteapi\persistentvolume.yaml
+		deploy\remoteapi\persistentvolumeclaim.yaml = deploy\remoteapi\persistentvolumeclaim.yaml
+		deploy\remoteapi\secret.yaml = deploy\remoteapi\secret.yaml
+		deploy\remoteapi\service.yaml = deploy\remoteapi\service.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{DF7B2175-E2D7-41FC-A824-2DDD11471ABC}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\doorworker\secrets\nats__host = deploy\doorworker\secrets\nats__host
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{16A8096D-24A2-4901-8C2C-D188838B456D}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\garageworker\secrets\nats__host = deploy\garageworker\secrets\nats__host
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{51F6155A-8F66-468B-9D37-BFEE7A8FACF6}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\lightworker\secrets\nats__host = deploy\lightworker\secrets\nats__host
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{77658866-C883-471B-A917-C2EE50EA4CAE}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\remoteapi\secrets\nats__host = deploy\remoteapi\secrets\nats__host
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,10 +142,6 @@ Global
 		{BF932129-87B0-433E-B9D7-08813986306B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF932129-87B0-433E-B9D7-08813986306B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF932129-87B0-433E-B9D7-08813986306B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C536E1FB-73F4-4E6A-BCA7-8E4B0B023CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C536E1FB-73F4-4E6A-BCA7-8E4B0B023CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C536E1FB-73F4-4E6A-BCA7-8E4B0B023CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C536E1FB-73F4-4E6A-BCA7-8E4B0B023CE0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB309EE0-9532-4EE9-9308-D55036A90DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB309EE0-9532-4EE9-9308-D55036A90DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB309EE0-9532-4EE9-9308-D55036A90DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -80,6 +154,10 @@ Global
 		{551BF467-B448-4A61-9CA0-32C71D05854C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{551BF467-B448-4A61-9CA0-32C71D05854C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{551BF467-B448-4A61-9CA0-32C71D05854C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A3CE7DD-2218-4E8A-A2F7-00E3CA3F1B6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A3CE7DD-2218-4E8A-A2F7-00E3CA3F1B6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A3CE7DD-2218-4E8A-A2F7-00E3CA3F1B6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A3CE7DD-2218-4E8A-A2F7-00E3CA3F1B6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,10 +169,19 @@ Global
 		{CD83DC68-EDA7-4CB9-924E-9CDB48E83ADA} = {0748AE38-B192-4C83-ACB8-FDBEE578827F}
 		{827485BB-16E5-47DD-A181-2DBDC1ECE48A} = {0748AE38-B192-4C83-ACB8-FDBEE578827F}
 		{BF932129-87B0-433E-B9D7-08813986306B} = {0748AE38-B192-4C83-ACB8-FDBEE578827F}
-		{C536E1FB-73F4-4E6A-BCA7-8E4B0B023CE0} = {124D23BB-D8A9-4DDD-8AF7-BAD88085914C}
 		{AB309EE0-9532-4EE9-9308-D55036A90DD5} = {124D23BB-D8A9-4DDD-8AF7-BAD88085914C}
 		{96CB00DA-E201-4EE0-8C2D-86E00ABC859D} = {124D23BB-D8A9-4DDD-8AF7-BAD88085914C}
 		{551BF467-B448-4A61-9CA0-32C71D05854C} = {124D23BB-D8A9-4DDD-8AF7-BAD88085914C}
+		{6A3CE7DD-2218-4E8A-A2F7-00E3CA3F1B6A} = {124D23BB-D8A9-4DDD-8AF7-BAD88085914C}
+		{44A1C42C-D48D-4ED4-9274-F108566B4E30} = {124D23BB-D8A9-4DDD-8AF7-BAD88085914C}
+		{0FBEE37A-A269-44DA-935F-962F64EE4039} = {44A1C42C-D48D-4ED4-9274-F108566B4E30}
+		{A2FD3647-F124-42C0-9E68-52546418D867} = {44A1C42C-D48D-4ED4-9274-F108566B4E30}
+		{CF09C8E9-79A5-4BA4-85F5-1985009E6CEC} = {44A1C42C-D48D-4ED4-9274-F108566B4E30}
+		{9945BAC1-F0DE-4D65-9E74-B43C63C769D5} = {44A1C42C-D48D-4ED4-9274-F108566B4E30}
+		{DF7B2175-E2D7-41FC-A824-2DDD11471ABC} = {0FBEE37A-A269-44DA-935F-962F64EE4039}
+		{16A8096D-24A2-4901-8C2C-D188838B456D} = {A2FD3647-F124-42C0-9E68-52546418D867}
+		{51F6155A-8F66-468B-9D37-BFEE7A8FACF6} = {CF09C8E9-79A5-4BA4-85F5-1985009E6CEC}
+		{77658866-C883-471B-A917-C2EE50EA4CAE} = {9945BAC1-F0DE-4D65-9E74-B43C63C769D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C49707E0-9ABA-4DF1-AC62-2B9077DBE9C8}

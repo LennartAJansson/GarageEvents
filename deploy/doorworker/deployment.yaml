@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doorworker
+  labels:
+    app: doorworker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: doorworker
+  template:
+    metadata:
+      labels:
+        app: doorworker
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
+    spec:
+      volumes:
+        - name: doorworker-storage
+          persistentVolumeClaim:
+            claimName: doorworker-claim
+      containers:
+      - name: doorworker
+        image: registry:5000/doorworker:latest
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef: 
+            name: doorworker-secret
+        - configMapRef:
+            name: doorworker-configmap
+        ports:
+        - containerPort: 80
+          name: http
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "16m"
+          limits:
+            memory: "256Mi"
+            cpu: "512m"
+        volumeMounts:
+          - mountPath: "/data"
+            name: doorworker-storage
+---
