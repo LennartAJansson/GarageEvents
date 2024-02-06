@@ -1,7 +1,9 @@
 ﻿namespace GarageEvents.Door;
 
+using GarageEvents.Remote;
+
 public interface IDoorHandler
 {
-  DoorHandler StartListen();
+  DoorHandler StartListen(RemoteActionDelegate callback);
   void StopListen();
 }

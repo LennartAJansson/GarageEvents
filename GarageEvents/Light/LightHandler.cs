@@ -9,13 +9,21 @@ using Microsoft.Extensions.Logging;
 //Implementation for interacting with the light
 public class LightHandler(ILogger<LightHandler> logger, IRemote remote) : ILightHandler
 {
-  public LightHandler StartListen()
+  private RemoteActionDelegate? callback;
+
+  public LightHandler StartListen(RemoteActionDelegate callback)
   {
+    this.callback = callback;
     remote.RemoteEvent += OnRemoteEvent;
+    remote.RemoteEvent += callback;
     return this;
   }
 
-  public void StopListen() => remote.RemoteEvent -= OnRemoteEvent;
+  public void StopListen()
+  {
+    remote.RemoteEvent -= callback;
+    remote.RemoteEvent -= OnRemoteEvent;
+  }
 
   private void OnRemoteEvent(object sender, RemoteAction action)
   {

@@ -2,6 +2,7 @@
 using GarageEvents.Extensions;
 using GarageEvents.Garage;
 using GarageEvents.Light;
+using GarageEvents.Messages;
 using GarageEvents.Nats.Extensions;
 using GarageEvents.Remote;
 
@@ -14,13 +15,20 @@ IHost host = builder.Build();
 
 using IServiceScope scope = host.Services.CreateScope();
 
-IRemote remote = scope.ServiceProvider.GetRequiredService<IRemote>();
+IRemote remote = scope.ServiceProvider
+  .GetRequiredService<IRemote>();
 
-IDoorHandler door = scope.ServiceProvider.GetRequiredService<IDoorHandler>().StartListen();
+IDoorHandler door = scope.ServiceProvider
+  .GetRequiredService<IDoorHandler>()
+  .StartListen(Listener);
 
-ILightHandler light = scope.ServiceProvider.GetRequiredService<ILightHandler>().StartListen();
+ILightHandler light = scope.ServiceProvider
+  .GetRequiredService<ILightHandler>()
+  .StartListen(Listener);
 
-IGarageHandler garage = scope.ServiceProvider.GetRequiredService<IGarageHandler>().StartListen();
+IGarageHandler garage = scope.ServiceProvider
+  .GetRequiredService<IGarageHandler>()
+  .StartListen(Listener);
 
 await remote.OpenDoor();
 while (!garage.DoorIsOpen)
@@ -52,3 +60,6 @@ Console.ReadKey();
 door.StopListen();
 light.StopListen();
 garage.StopListen();
+
+//TODO: Add a listener for the remote event
+static void Listener(object sender, RemoteAction action) => Console.WriteLine();

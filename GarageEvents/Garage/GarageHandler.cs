@@ -11,6 +11,7 @@ public class GarageHandler : IGarageHandler
 {
   private readonly ILogger<GarageHandler> logger;
   private readonly IRemote remote;
+  private RemoteActionDelegate? callback = null;
 
   public bool DoorIsOpen { get; set; } = false;
   public bool LightsAreOn { get; set; } = false;
@@ -21,13 +22,20 @@ public class GarageHandler : IGarageHandler
     this.remote = remote;
   }
 
-  public GarageHandler StartListen()
+  public GarageHandler StartListen(RemoteActionDelegate callback)
   {
+    this.callback = callback;
     remote.RemoteEvent += OnRemoteEvent;
+    remote.RemoteEvent += callback;
+
     return this;
   }
 
-  public void StopListen() => remote.RemoteEvent -= OnRemoteEvent;
+  public void StopListen()
+  {
+    remote.RemoteEvent -= callback;
+    remote.RemoteEvent -= OnRemoteEvent;
+  }
 
   private void OnRemoteEvent(object sender, RemoteAction action)
   {

@@ -1,5 +1,6 @@
 ﻿using GarageEvents.Extensions;
 using GarageEvents.Garage;
+using GarageEvents.Messages;
 using GarageEvents.Nats.Extensions;
 using GarageEvents.Remote;
 
@@ -10,8 +11,12 @@ builder.Services
 IHost host = builder.Build();
 
 using IServiceScope scope = host.Services.CreateScope();
-IRemote remote = scope.ServiceProvider.GetRequiredService<IRemote>();
-IGarageHandler garage = scope.ServiceProvider.GetRequiredService<IGarageHandler>().StartListen();
+IRemote remote = scope.ServiceProvider
+  .GetRequiredService<IRemote>();
+
+IGarageHandler garage = scope.ServiceProvider
+  .GetRequiredService<IGarageHandler>()
+  .StartListen(Listener);
 
 await remote.OpenDoor();
 while (!garage.DoorIsOpen)
@@ -41,3 +46,6 @@ Console.WriteLine("Press any key to continue...");
 Console.ReadKey();
 
 garage.StopListen();
+
+//TODO: Add a listener for the remote event
+static void Listener(object sender, RemoteAction action) => Console.WriteLine();
