@@ -8,6 +8,13 @@ builder.Services
   .AddGarageComponents()
   .AddNatsRemote(builder.Configuration);
 
+//From NET8.0 they started to use port 8080 and 8081 as default ports for http and https
+if (builder.Environment.IsProduction())
+{
+  _ = builder.WebHost.UseSetting("http_port", "80");
+  _ = builder.WebHost.UseSetting("https_port", "443");
+}
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
