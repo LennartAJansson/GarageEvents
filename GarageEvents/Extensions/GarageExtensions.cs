@@ -11,8 +11,9 @@ public static class GarageExtensions
 {
   public static IServiceCollection AddGarageComponents(this IServiceCollection services)
   {
-    _ = services.AddSingleton<IGarage, Garage>()
+    _ = services
       .AddSingleton<IRemote, DefaultRemote>()
+      .AddScoped<IGarageHandler, GarageHandler>()
       .AddScoped<IDoorHandler, DoorHandler>()
       .AddScoped<ILightHandler, LightHandler>();
     return services;

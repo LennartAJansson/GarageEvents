@@ -9,9 +9,11 @@ builder.Services
 IHost host = builder.Build();
 
 using IServiceScope scope = host.Services.CreateScope();
+
 ILightHandler handler = scope.ServiceProvider.GetRequiredService<ILightHandler>();
 handler.StartListen();
 
+Console.WriteLine("Press any key to continue...");
 Console.ReadKey();
 
 handler.StopListen();

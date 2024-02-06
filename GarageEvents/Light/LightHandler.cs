@@ -6,18 +6,18 @@ using GarageEvents.Types;
 
 using Microsoft.Extensions.Logging;
 
-//Class with only responsibility to handle light events
+//Implementation for interacting with the light
 public class LightHandler(ILogger<LightHandler> logger, IRemote remote) : ILightHandler
 {
   public LightHandler StartListen()
   {
-    remote.GarageEvent += OnGarageEvent;
+    remote.RemoteEvent += OnRemoteEvent;
     return this;
   }
 
-  public void StopListen() => remote.GarageEvent -= OnGarageEvent;
+  public void StopListen() => remote.RemoteEvent -= OnRemoteEvent;
 
-  private void OnGarageEvent(object sender, RemoteAction action)
+  private void OnRemoteEvent(object sender, RemoteAction action)
   {
     switch (action.RemoteActionType)
     {

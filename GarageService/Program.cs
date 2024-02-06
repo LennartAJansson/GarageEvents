@@ -10,6 +10,10 @@ IHost host = builder.Build();
 
 using IServiceScope scope = host.Services.CreateScope();
 
-using IGarage garage = scope.ServiceProvider.GetRequiredService<IGarage>();
+IGarageHandler garage = scope.ServiceProvider.GetRequiredService<IGarageHandler>();
+garage.StartListen();
 
+Console.WriteLine("Press any key to continue...");
 Console.ReadKey();
+
+garage.StopListen();

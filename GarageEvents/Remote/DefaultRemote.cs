@@ -9,7 +9,7 @@ using GarageEvents.Types;
 //with all components in the same process
 public class DefaultRemote : IRemote
 {
-  public event RemoteActionDelegate? GarageEvent;
+  public event RemoteActionDelegate? RemoteEvent;
 
   public Task OpenDoor()
   {
@@ -44,5 +44,5 @@ public class DefaultRemote : IRemote
   }
 
   private void SendEvent(object sender, RemoteAction action)
-    => GarageEvent?.Invoke(sender, action);
+    => RemoteEvent?.Invoke(sender, action);
 }

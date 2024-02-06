@@ -7,7 +7,7 @@ public delegate void RemoteActionDelegate(object sender, RemoteAction action);
 
 public interface IRemote
 {
-  event RemoteActionDelegate? GarageEvent;
+  event RemoteActionDelegate? RemoteEvent;
 
   Task OpenDoor();
 

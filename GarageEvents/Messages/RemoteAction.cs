@@ -11,7 +11,7 @@ public record RemoteAction(DateTimeOffset Time, RemoteActionType RemoteActionTyp
     => new(time, actionType);
 }
 
-public static class GarageActionExtensions
+public static class RemoteActionExtensions
 {
   public static string ToJson(this RemoteAction action)
   {
@@ -19,5 +19,5 @@ public static class GarageActionExtensions
     return response;
   }
 
-  public static RemoteAction? ToGarageAction(this string json) => JsonSerializer.Deserialize<RemoteAction>(json);
+  public static RemoteAction? ToRemoteAction(this string json) => JsonSerializer.Deserialize<RemoteAction>(json);
 }

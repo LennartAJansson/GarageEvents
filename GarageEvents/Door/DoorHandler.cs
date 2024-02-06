@@ -6,18 +6,18 @@ using GarageEvents.Types;
 
 using Microsoft.Extensions.Logging;
 
-//Class with only responsibility to handle door events
+//Implementation for interacting with the door
 public class DoorHandler(ILogger<DoorHandler> logger, IRemote remote) : IDoorHandler
 {
   public DoorHandler StartListen()
   {
-    remote.GarageEvent += OnGarageEvent;
+    remote.RemoteEvent += OnRemoteEvent;
     return this;
   }
 
-  public void StopListen() => remote.GarageEvent -= OnGarageEvent;
+  public void StopListen() => remote.RemoteEvent -= OnRemoteEvent;
 
-  private void OnGarageEvent(object sender, RemoteAction e)
+  private void OnRemoteEvent(object sender, RemoteAction e)
   {
     switch (e.RemoteActionType)
     {

@@ -23,7 +23,7 @@ public class NatsRemote : IRemote, IDisposable
   private readonly NatsServiceConfig config;
   private bool disposedValue;
 
-  public event RemoteActionDelegate? GarageEvent;
+  public event RemoteActionDelegate? RemoteEvent;
 
   public NatsRemote(ILogger<NatsRemote> logger, NatsServiceConfig config, ILoggerFactory loggerFactory)
   {
@@ -73,7 +73,7 @@ public class NatsRemote : IRemote, IDisposable
         {
           if (jsMsg.Data is not null)
           {
-            GarageEvent?.Invoke(this, jsMsg.Data);
+            RemoteEvent?.Invoke(this, jsMsg.Data);
             await jsMsg.AckAsync();
           }
         }

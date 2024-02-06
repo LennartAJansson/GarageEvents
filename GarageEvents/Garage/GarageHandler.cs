@@ -7,25 +7,29 @@ using GarageEvents.Types;
 using Microsoft.Extensions.Logging;
 
 //Implementation for interacting with the garage
-public class Garage : IGarage
+public class GarageHandler : IGarageHandler
 {
-  private readonly ILogger<Garage> logger;
+  private readonly ILogger<GarageHandler> logger;
   private readonly IRemote remote;
-  //private readonly DoorHandler doorHandler;
-  //private readonly LightHandler lightHandler;
-  private bool disposedValue;
 
   public bool DoorIsOpen { get; set; } = false;
   public bool LightsAreOn { get; set; } = false;
 
-  public Garage(ILogger<Garage> logger, IRemote remote)
+  public GarageHandler(ILogger<GarageHandler> logger, IRemote remote)
   {
     this.logger = logger;
     this.remote = remote;
-    this.remote.GarageEvent += OnGarageEvent;
   }
 
-  private void OnGarageEvent(object sender, RemoteAction action)
+  public GarageHandler StartListen()
+  {
+    remote.RemoteEvent += OnRemoteEvent;
+    return this;
+  }
+
+  public void StopListen() => remote.RemoteEvent -= OnRemoteEvent;
+
+  private void OnRemoteEvent(object sender, RemoteAction action)
   {
     switch (action.RemoteActionType)
     {
@@ -46,27 +50,5 @@ public class Garage : IGarage
         LightsAreOn = false;
         break;
     }
-  }
-
-  protected virtual void Dispose(bool disposing)
-  {
-    if (!disposedValue)
-    {
-      if (disposing)
-      {
-        //lightHandler.StopListen();
-        //doorHandler.StopListen();
-        remote.GarageEvent -= OnGarageEvent;
-      }
-      // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-      disposedValue = true;
-    }
-  }
-
-  public void Dispose()
-  {
-    // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-    Dispose(disposing: true);
-    GC.SuppressFinalize(this);
   }
 }
