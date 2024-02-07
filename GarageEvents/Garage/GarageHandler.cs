@@ -16,7 +16,7 @@ public class GarageHandler(ILogger<GarageHandler> logger, IRemote remote)
   public bool DoorIsOpen { get; set; } = false;
   public bool LightsAreOn { get; set; } = false;
 
-  public GarageHandler StartListen(RemoteActionDelegate? callback)
+  public IGarageHandler StartListen(RemoteActionDelegate? callback)
   {
     base.Start(callback);
     return this;
@@ -44,6 +44,4 @@ public class GarageHandler(ILogger<GarageHandler> logger, IRemote remote)
         break;
     }
   }
-
-  IGarageHandler IGarageHandler.StartListen(RemoteActionDelegate callback) => throw new NotImplementedException();
 }

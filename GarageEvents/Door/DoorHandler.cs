@@ -13,7 +13,7 @@ public class DoorHandler(ILogger<DoorHandler> logger, IRemote remote)
 {
   private readonly ILogger<DoorHandler> logger = logger;
 
-  public DoorHandler StartListen(RemoteActionDelegate? callback)
+  public IDoorHandler StartListen(RemoteActionDelegate? callback)
   {
     base.Start(callback);
     return this;
@@ -31,6 +31,4 @@ public class DoorHandler(ILogger<DoorHandler> logger, IRemote remote)
         break;
     }
   }
-
-  IDoorHandler IDoorHandler.StartListen(RemoteActionDelegate callback) => throw new NotImplementedException();
 }

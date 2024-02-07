@@ -2,7 +2,6 @@
 using GarageEvents.Extensions;
 using GarageEvents.Garage;
 using GarageEvents.Light;
-using GarageEvents.Messages;
 using GarageEvents.Nats.Extensions;
 using GarageEvents.Remote;
 
@@ -10,7 +9,8 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.Services
   .AddGarageComponents()
 //TODO: Uncomment to run external events through NATS server
-.AddNatsRemote(builder.Configuration);
+.AddNatsRemote(builder.Configuration)
+;
 IHost host = builder.Build();
 
 using IServiceScope scope = host.Services.CreateScope();
@@ -20,15 +20,15 @@ IRemote remote = scope.ServiceProvider
 
 IDoorHandler door = scope.ServiceProvider
   .GetRequiredService<IDoorHandler>()
-  .StartListen(Listener);
+  .StartListen(null);
 
 ILightHandler light = scope.ServiceProvider
   .GetRequiredService<ILightHandler>()
-  .StartListen(Listener);
+  .StartListen(null);
 
 IGarageHandler garage = scope.ServiceProvider
   .GetRequiredService<IGarageHandler>()
-  .StartListen(Listener);
+  .StartListen(null);
 
 await remote.OpenDoor();
 while (!garage.DoorIsOpen)
@@ -60,6 +60,3 @@ Console.ReadKey();
 door.StopListen();
 light.StopListen();
 garage.StopListen();
-
-//TODO: Add a listener for the remote event
-static void Listener(object sender, RemoteAction action) => Console.WriteLine();

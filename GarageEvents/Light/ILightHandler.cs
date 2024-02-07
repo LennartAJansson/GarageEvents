@@ -3,6 +3,6 @@ using GarageEvents.Remote;
 
 public interface ILightHandler
 {
-  ILightHandler StartListen(RemoteActionDelegate callback);
+  ILightHandler StartListen(RemoteActionDelegate? callback);
   void StopListen();
 }

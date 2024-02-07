@@ -13,9 +13,9 @@ public static class GarageExtensions
   {
     _ = services
       .AddSingleton<IRemote, DefaultRemote>()
-      .AddScoped<IGarageHandler, GarageHandler>()
-      .AddScoped<IDoorHandler, DoorHandler>()
-      .AddScoped<ILightHandler, LightHandler>();
+      .AddTransient<IGarageHandler, GarageHandler>()
+      .AddTransient<IDoorHandler, DoorHandler>()
+      .AddTransient<ILightHandler, LightHandler>();
     return services;
   }
 }

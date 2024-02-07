@@ -13,7 +13,7 @@ public class LightHandler(ILogger<LightHandler> logger, IRemote remote)
 {
   private readonly ILogger<LightHandler> logger = logger;
 
-  public LightHandler StartListen(RemoteActionDelegate? callback)
+  public ILightHandler StartListen(RemoteActionDelegate? callback)
   {
     base.Start(callback);
     return this;
@@ -31,6 +31,4 @@ public class LightHandler(ILogger<LightHandler> logger, IRemote remote)
         break;
     }
   }
-
-  ILightHandler ILightHandler.StartListen(RemoteActionDelegate callback) => throw new NotImplementedException();
 }

@@ -4,6 +4,6 @@ using GarageEvents.Remote;
 
 public interface IDoorHandler
 {
-  IDoorHandler StartListen(RemoteActionDelegate callback);
+  IDoorHandler StartListen(RemoteActionDelegate? callback);
   void StopListen();
 }
