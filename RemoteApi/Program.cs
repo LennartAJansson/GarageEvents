@@ -1,7 +1,11 @@
 using GarageEvents.Extensions;
 using GarageEvents.Nats.Extensions;
 using GarageEvents.Remote;
-
+//TODO Make sure that remote is not listening, only sending messages
+//TODO Make sure that garage is listening for status from door and light, only receiving messages
+//TODO Make sure that light is listening to remote, but also can send message about current status
+//TODO Make sure that door is listening to remote, but also can send message about current status
+//TODO Maybe status should be sent frequently to the garage
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -40,6 +44,7 @@ _ = app.UseSwaggerUI();
 
 app.MapPost("/opendoor", async (IRemote handler) =>
 {
+  //Inject the remote control to send message to garage and door
   await handler.OpenDoor();
 })
 .WithName("OpenDoor")
@@ -47,6 +52,7 @@ app.MapPost("/opendoor", async (IRemote handler) =>
 
 app.MapPost("/lightson", async (IRemote handler) =>
 {
+  //Inject the remote control to send message to garage and light
   await handler.LightsOn();
 })
 .WithName("LightsOn")
@@ -54,6 +60,7 @@ app.MapPost("/lightson", async (IRemote handler) =>
 
 app.MapPost("/lightsoff", async (IRemote handler) =>
 {
+  //Inject the remote control to send message to garage and light
   await handler.LightsOff();
 })
 .WithName("LightsOff")
@@ -61,6 +68,7 @@ app.MapPost("/lightsoff", async (IRemote handler) =>
 
 app.MapPost("/closedoor", async (IRemote handler) =>
 {
+  //Inject the remote control to send message to garage and door
   await handler.CloseDoor();
 })
 .WithName("CloseDoor")
