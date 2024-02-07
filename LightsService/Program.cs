@@ -11,7 +11,7 @@ IHost host = builder.Build();
 
 using IServiceScope scope = host.Services.CreateScope();
 
-ILightHandler handler = (ILightHandler)scope.ServiceProvider
+ILightHandler handler = scope.ServiceProvider
   .GetRequiredService<ILightHandler>()
   .StartListen(Listener);
 

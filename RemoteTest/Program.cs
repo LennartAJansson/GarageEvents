@@ -14,7 +14,7 @@ using IServiceScope scope = host.Services.CreateScope();
 IRemote remote = scope.ServiceProvider
   .GetRequiredService<IRemote>();
 
-IGarageHandler garage = (IGarageHandler)scope.ServiceProvider
+IGarageHandler garage = scope.ServiceProvider
   .GetRequiredService<IGarageHandler>()
   .StartListen(Listener);
 

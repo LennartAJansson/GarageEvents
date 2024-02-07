@@ -11,7 +11,7 @@ IHost host = builder.Build();
 
 using IServiceScope scope = host.Services.CreateScope();
 
-IGarageHandler garage = (IGarageHandler)scope.ServiceProvider
+IGarageHandler garage = scope.ServiceProvider
   .GetRequiredService<IGarageHandler>()
   .StartListen(Listener);
 

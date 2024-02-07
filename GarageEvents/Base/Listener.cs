@@ -2,15 +2,12 @@
 using GarageEvents.Messages;
 using GarageEvents.Remote;
 
-public abstract class Listener
-  : IListener
+public abstract class Listener(IRemote remote)
 {
-  private readonly IRemote remote;
+  private readonly IRemote remote = remote;
   private RemoteActionDelegate? callback = null;
 
-  public Listener(IRemote remote) => this.remote = remote;
-
-  public virtual object StartListen(RemoteActionDelegate? callback)
+  protected void Start(RemoteActionDelegate? callback)
   {
     if (callback is null)
     {
@@ -21,11 +18,9 @@ public abstract class Listener
       this.callback = callback;
       remote.RemoteEvent += callback;
     }
-
-    return this;
   }
 
-  public void StopListen()
+  protected void Stop()
   {
     if (callback is not null)
     {
@@ -38,4 +33,6 @@ public abstract class Listener
   }
 
   public abstract void OnRemoteEvent(object sender, RemoteAction action);
+
+  public void StopListen() => Stop();
 }

@@ -8,22 +8,14 @@ using GarageEvents.Types;
 using Microsoft.Extensions.Logging;
 
 //Implementation for interacting with the light
-public class LightHandler : Listener, ILightHandler
+public class LightHandler(ILogger<LightHandler> logger, IRemote remote)
+  : Listener(remote), ILightHandler
 {
-  private readonly ILogger<LightHandler> logger;
-  private readonly IRemote remote;
-  private readonly RemoteActionDelegate? callback;
+  private readonly ILogger<LightHandler> logger = logger;
 
-  public LightHandler(ILogger<LightHandler> logger, IRemote remote)
-    : base(remote)
+  public LightHandler StartListen(RemoteActionDelegate? callback)
   {
-    this.logger = logger;
-    this.remote = remote;
-  }
-
-  public override LightHandler StartListen(RemoteActionDelegate? callback)
-  {
-    _ = base.StartListen(callback);
+    base.Start(callback);
     return this;
   }
 
@@ -39,4 +31,6 @@ public class LightHandler : Listener, ILightHandler
         break;
     }
   }
+
+  ILightHandler ILightHandler.StartListen(RemoteActionDelegate callback) => throw new NotImplementedException();
 }

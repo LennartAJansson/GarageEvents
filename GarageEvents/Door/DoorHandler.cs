@@ -8,16 +8,14 @@ using GarageEvents.Types;
 using Microsoft.Extensions.Logging;
 
 //Implementation for interacting with the door
-public class DoorHandler : Listener, IDoorHandler
+public class DoorHandler(ILogger<DoorHandler> logger, IRemote remote)
+  : Listener(remote), IDoorHandler
 {
-  private readonly ILogger<DoorHandler> logger;
+  private readonly ILogger<DoorHandler> logger = logger;
 
-  public DoorHandler(ILogger<DoorHandler> logger, IRemote remote)
-    : base(remote) => this.logger = logger;
-
-  public override DoorHandler StartListen(RemoteActionDelegate? callback)
+  public DoorHandler StartListen(RemoteActionDelegate? callback)
   {
-    _ = base.StartListen(callback);
+    base.Start(callback);
     return this;
   }
 
@@ -34,4 +32,5 @@ public class DoorHandler : Listener, IDoorHandler
     }
   }
 
+  IDoorHandler IDoorHandler.StartListen(RemoteActionDelegate callback) => throw new NotImplementedException();
 }
