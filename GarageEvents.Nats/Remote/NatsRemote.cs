@@ -115,6 +115,34 @@ public class NatsRemote
     _ = await SendEvent(action);
   }
 
+  public async Task DoorIsOpen()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.DoorIsOpen);
+    logger.LogInformation("{now:G}: Remote is signalling DoorIsOpen", action.Time);
+    _ = await SendEvent(action);
+  }
+
+  public async Task DoorIsClosed()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.DoorIsClosed);
+    logger.LogInformation("{now:G}: Remote is signalling DoorIsClosed", action.Time);
+    _ = await SendEvent(action);
+  }
+
+  public async Task LightIsOn()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightIsOn);
+    logger.LogInformation("{now:G}: Remote is signalling LightIsOn", action.Time);
+    _ = await SendEvent(action);
+  }
+
+  public async Task LightIsOff()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightIsOff);
+    logger.LogInformation("{now:G}: Remote is signalling LightIsOff", action.Time);
+    _ = await SendEvent(action);
+  }
+
   private async Task<ulong> SendEvent(RemoteActionMessage action)
   {
     if (jetStream is null)
@@ -151,9 +179,4 @@ public class NatsRemote
     Dispose(disposing: true);
     GC.SuppressFinalize(this);
   }
-
-  public Task DoorIsOpen() => throw new NotImplementedException();
-  public Task DoorIsClosed() => throw new NotImplementedException();
-  public Task LightIsOn() => throw new NotImplementedException();
-  public Task LightIsOff() => throw new NotImplementedException();
 }
