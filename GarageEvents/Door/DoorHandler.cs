@@ -2,13 +2,12 @@
 
 using GarageEvents.Base;
 using GarageEvents.Remote;
-using GarageEvents.State;
 using GarageEvents.Types;
 
 using Microsoft.Extensions.Logging;
 
 //Implementation for interacting with the door
-public class DoorHandler(ILogger<DoorHandler> logger, IRemote remote, CurrentStateHandler state)
+public class DoorHandler(ILogger<DoorHandler> logger, IRemote remote)
   : Listener(remote), IDoorHandler
 {
   private readonly ILogger<DoorHandler> logger = logger;

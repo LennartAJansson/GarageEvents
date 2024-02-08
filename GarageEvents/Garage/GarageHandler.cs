@@ -2,13 +2,12 @@
 
 using GarageEvents.Base;
 using GarageEvents.Remote;
-using GarageEvents.State;
 using GarageEvents.Types;
 
 using Microsoft.Extensions.Logging;
 
 //Implementation for interacting with the garage
-public class GarageHandler(ILogger<GarageHandler> logger, IRemote remote, CurrentStateHandler state)
+public class GarageHandler(ILogger<GarageHandler> logger, IRemote remote)
   : Listener(remote), IGarageHandler
 {
   private readonly ILogger<GarageHandler> logger = logger;

@@ -3,7 +3,6 @@
 using GarageEvents.Nats.Configuration;
 using GarageEvents.Nats.Serializer;
 using GarageEvents.Remote;
-using GarageEvents.State;
 using GarageEvents.Types;
 
 using Microsoft.Extensions.Logging;
@@ -26,7 +25,7 @@ public class NatsRemote
 
   public event RemoteActionDelegate? RemoteEvent;
 
-  public NatsRemote(ILogger<NatsRemote> logger, NatsServiceConfig config, ILoggerFactory loggerFactory, CurrentStateHandler state)
+  public NatsRemote(ILogger<NatsRemote> logger, NatsServiceConfig config, ILoggerFactory loggerFactory)
   {
     this.logger = logger;
     NatsOpts opts = NatsOpts.Default with
@@ -152,4 +151,9 @@ public class NatsRemote
     Dispose(disposing: true);
     GC.SuppressFinalize(this);
   }
+
+  public Task DoorIsOpen() => throw new NotImplementedException();
+  public Task DoorIsClosed() => throw new NotImplementedException();
+  public Task LightIsOn() => throw new NotImplementedException();
+  public Task LightIsOff() => throw new NotImplementedException();
 }

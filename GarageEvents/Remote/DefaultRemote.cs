@@ -1,6 +1,5 @@
 ﻿namespace GarageEvents.Remote;
 
-using GarageEvents.State;
 using GarageEvents.Types;
 
 using Microsoft.Extensions.Logging;
@@ -9,7 +8,7 @@ using Microsoft.Extensions.Logging;
 //It is using traditional delegates and events to signal the remote events
 //Suitable for a single instance application
 //with all components in the same process
-public class DefaultRemote(ILogger<DefaultRemote> logger, CurrentStateHandler state)
+public class DefaultRemote(ILogger<DefaultRemote> logger)
   : IRemote
 {
   public event RemoteActionDelegate? RemoteEvent;
@@ -49,7 +48,38 @@ public class DefaultRemote(ILogger<DefaultRemote> logger, CurrentStateHandler st
   public Task Refresh()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.RefreshCmd);
-    logger.LogInformation("{time:G}: Remote is signalling GetStatus", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling Refresh", action.Time);
+    SendEvent(this, action);
+    return Task.CompletedTask;
+  }
+  public Task DoorIsOpen()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.DoorIsOpen);
+    logger.LogInformation("{time:G}: Remote is signalling DoorIsOpen", action.Time);
+    SendEvent(this, action);
+    return Task.CompletedTask;
+  }
+
+  public Task DoorIsClosed()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.DoorIsClosed);
+    logger.LogInformation("{time:G}: Remote is signalling DoorIsClosed", action.Time);
+    SendEvent(this, action);
+    return Task.CompletedTask;
+  }
+
+  public Task LightIsOn()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightIsOn);
+    logger.LogInformation("{time:G}: Remote is signalling LightIsOn", action.Time);
+    SendEvent(this, action);
+    return Task.CompletedTask;
+  }
+
+  public Task LightIsOff()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightIsOff);
+    logger.LogInformation("{time:G}: Remote is signalling LightIsOff", action.Time);
     SendEvent(this, action);
     return Task.CompletedTask;
   }

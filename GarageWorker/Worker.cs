@@ -25,7 +25,7 @@ public class Worker(ILogger<Worker> logger, IGarageHandler handler) : Background
       {
         logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
       }
-      await Task.Delay(30000, stoppingToken);
+      await Task.Delay(60000, stoppingToken);
     }
   }
 

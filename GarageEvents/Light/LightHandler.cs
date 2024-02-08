@@ -2,13 +2,12 @@
 
 using GarageEvents.Base;
 using GarageEvents.Remote;
-using GarageEvents.State;
 using GarageEvents.Types;
 
 using Microsoft.Extensions.Logging;
 
 //Implementation for interacting with the light
-public class LightHandler(ILogger<LightHandler> logger, IRemote remote, CurrentStateHandler state)
+public class LightHandler(ILogger<LightHandler> logger, IRemote remote)
   : Listener(remote), ILightHandler
 {
   private readonly ILogger<LightHandler> logger = logger;

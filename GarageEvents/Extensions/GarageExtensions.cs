@@ -4,7 +4,6 @@ using GarageEvents.Door;
 using GarageEvents.Garage;
 using GarageEvents.Light;
 using GarageEvents.Remote;
-using GarageEvents.State;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,11 +13,9 @@ public static class GarageExtensions
   {
     _ = services
       .AddSingleton<IRemote, DefaultRemote>()
-      .AddTransient<ICurrentStateHandler, CurrentStateHandler>()
       .AddTransient<IGarageHandler, GarageHandler>()
       .AddTransient<IDoorHandler, DoorHandler>()
-      .AddTransient<ILightHandler, LightHandler>()
-      .AddTransient<ICurrentStateHandler, CurrentStateHandler>();
+      .AddTransient<ILightHandler, LightHandler>();
     return services;
   }
 }
