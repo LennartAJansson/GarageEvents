@@ -1,5 +1,3 @@
-using DoorWorker;
-
 using GarageEvents.Extensions;
 using GarageEvents.Nats.Extensions;
 
@@ -9,7 +7,7 @@ builder.Services
   .AddGarageComponents()
   .AddNatsRemote(builder.Configuration);
 
-builder.Services.AddHostedService<DoorWorker>();
+builder.Services.AddHostedService<DoorWorker.DoorWorker>();
 
 IHost host = builder.Build();
 host.Run();

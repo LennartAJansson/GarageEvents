@@ -4,7 +4,7 @@ using GarageEvents.Types;
 
 public abstract class Listener(IRemote remote)
 {
-  private readonly IRemote remote = remote;
+  protected readonly IRemote remote = remote;
   private RemoteActionDelegate? callback = null;
 
   protected void Start(RemoteActionDelegate? callback)
