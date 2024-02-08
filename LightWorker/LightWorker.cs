@@ -1,9 +1,11 @@
 namespace LightWorker;
 
 using GarageEvents.Light;
+using GarageEvents.Remote;
 using GarageEvents.Types;
 
-public class Worker(ILogger<Worker> logger, ILightHandler handler) : BackgroundService
+public class LightWorker(ILogger<LightWorker> logger, ILightHandler handler, IRemote remote)
+  : BackgroundService
 {
   public override Task StartAsync(CancellationToken cancellationToken)
   {
@@ -29,16 +31,19 @@ public class Worker(ILogger<Worker> logger, ILightHandler handler) : BackgroundS
     }
   }
 
-  //TODO: Add a listener for the remote event
   private void Listener(object sender, RemoteActionMessage action)
   {
     switch (action.RemoteActionType)
     {
       case RemoteActionType.LightsOnCmd:
         logger.LogInformation("{time:G}: LightWorker is doing work for turning on lights", action.Time);
+        //TODO: Implement the light turning on
+        remote.LightIsOn().RunSynchronously();
         break;
       case RemoteActionType.LightsOffCmd:
         logger.LogInformation("{time:G}: LightWorker is doing work for turning off lights", action.Time);
+        //TODO: Implement the light turning off
+        remote.LightIsOff().RunSynchronously();
         break;
     }
   }

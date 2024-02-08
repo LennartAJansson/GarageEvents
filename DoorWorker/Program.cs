@@ -9,7 +9,7 @@ builder.Services
   .AddGarageComponents()
   .AddNatsRemote(builder.Configuration);
 
-builder.Services.AddHostedService<Worker>();
+builder.Services.AddHostedService<DoorWorker>();
 
 IHost host = builder.Build();
 host.Run();

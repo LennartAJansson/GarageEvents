@@ -2,14 +2,14 @@
 using GarageEvents.Extensions;
 using GarageEvents.Garage;
 using GarageEvents.Light;
-using GarageEvents.Nats.Extensions;
+//using GarageEvents.Nats.Extensions;
 using GarageEvents.Remote;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.Services
   .AddGarageComponents()
 //TODO: Uncomment to run external events through NATS server
-.AddNatsRemote(builder.Configuration)
+//.AddNatsRemote(builder.Configuration)
 ;
 IHost host = builder.Build();
 

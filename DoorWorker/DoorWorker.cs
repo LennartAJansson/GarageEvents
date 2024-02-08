@@ -1,9 +1,11 @@
 namespace DoorWorker;
 
 using GarageEvents.Door;
+using GarageEvents.Remote;
 using GarageEvents.Types;
 
-public class Worker(ILogger<Worker> logger, IDoorHandler handler) : BackgroundService
+public class DoorWorker(ILogger<DoorWorker> logger, IDoorHandler handler, IRemote remote)
+  : BackgroundService
 {
   public override Task StartAsync(CancellationToken cancellationToken)
   {
@@ -29,16 +31,19 @@ public class Worker(ILogger<Worker> logger, IDoorHandler handler) : BackgroundSe
     }
   }
 
-  //TODO: Add a listener for the remote event
   private void Listener(object sender, RemoteActionMessage action)
   {
     switch (action.RemoteActionType)
     {
       case RemoteActionType.OpenDoorCmd:
         logger.LogInformation("{time:G}: DoorWorker is doing work for opening the door", action.Time);
+        //TODO: Implement the door opening
+        remote.DoorIsOpen().RunSynchronously();
         break;
       case RemoteActionType.CloseDoorCmd:
         logger.LogInformation("{time:G}: DoorWorker is doing work for closing the door", action.Time);
+        //TODO: Implement the door closing
+        remote.DoorIsClosed().RunSynchronously();
         break;
     }
   }
