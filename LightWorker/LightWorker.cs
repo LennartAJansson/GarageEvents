@@ -38,12 +38,12 @@ public class LightWorker(ILogger<LightWorker> logger, ILightHandler handler, IRe
       case RemoteActionType.LightsOnCmd:
         logger.LogInformation("{time:G}: LightWorker is doing work for turning on lights", action.Time);
         //TODO: Implement the light turning on
-        remote.LightIsOn().RunSynchronously();
+        _ = Task.Run(remote.LightIsOn);
         break;
       case RemoteActionType.LightsOffCmd:
         logger.LogInformation("{time:G}: LightWorker is doing work for turning off lights", action.Time);
         //TODO: Implement the light turning off
-        remote.LightIsOff().RunSynchronously();
+        _ = Task.Run(remote.LightIsOff);
         break;
     }
   }

@@ -25,12 +25,12 @@ public class LightHandler(ILogger<LightHandler> logger, IRemote remote)
       case RemoteActionType.LightsOnCmd:
         logger.LogInformation("{time:G}: Light is turning on", action.Time);
         //TODO: Implement the light turning on
-        remote.LightIsOn().RunSynchronously();
+        _ = Task.Run(remote.LightIsOn);
         break;
       case RemoteActionType.LightsOffCmd:
         logger.LogInformation("{time:G}: Light is turning off", action.Time);
         //TODO: Implement the light turning off
-        remote.LightIsOff().RunSynchronously();
+        _ = Task.Run(remote.LightIsOff);
         break;
     }
   }

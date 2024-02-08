@@ -38,12 +38,12 @@ public class DoorWorker(ILogger<DoorWorker> logger, IDoorHandler handler, IRemot
       case RemoteActionType.OpenDoorCmd:
         logger.LogInformation("{time:G}: DoorWorker is doing work for opening the door", action.Time);
         //TODO: Implement the door opening
-        remote.DoorIsOpen().RunSynchronously();
+        _ = Task.Run(remote.DoorIsOpen);
         break;
       case RemoteActionType.CloseDoorCmd:
         logger.LogInformation("{time:G}: DoorWorker is doing work for closing the door", action.Time);
         //TODO: Implement the door closing
-        remote.DoorIsClosed().RunSynchronously();
+        _ = Task.Run(remote.DoorIsClosed);
         break;
     }
   }
