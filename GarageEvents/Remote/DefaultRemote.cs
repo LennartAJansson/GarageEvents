@@ -1,6 +1,6 @@
 ﻿namespace GarageEvents.Remote;
 
-using GarageEvents.Messages;
+using GarageEvents.State;
 using GarageEvents.Types;
 
 using Microsoft.Extensions.Logging;
@@ -9,42 +9,51 @@ using Microsoft.Extensions.Logging;
 //It is using traditional delegates and events to signal the remote events
 //Suitable for a single instance application
 //with all components in the same process
-public class DefaultRemote(ILogger<DefaultRemote> logger) : IRemote
+public class DefaultRemote(ILogger<DefaultRemote> logger, CurrentStateHandler state)
+  : IRemote
 {
   public event RemoteActionDelegate? RemoteEvent;
 
   public Task OpenDoor()
   {
-    DateTimeOffset now = DateTimeOffset.Now;
-    logger.LogInformation("{time:G}: Remote is signalling OpenDoor", now);
-    SendEvent(this, RemoteAction.Create(now, RemoteActionType.OpenDoor));
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.OpenDoorCmd);
+    logger.LogInformation("{time:G}: Remote is signalling OpenDoor", action.Time);
+    SendEvent(this, action);
     return Task.CompletedTask;
   }
 
   public Task CloseDoor()
   {
-    DateTimeOffset now = DateTimeOffset.Now;
-    logger.LogInformation("{time:G}: Remote is signalling CloseDoor", now);
-    SendEvent(this, RemoteAction.Create(now, RemoteActionType.CloseDoor));
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.CloseDoorCmd);
+    logger.LogInformation("{time:G}: Remote is signalling CloseDoor", action.Time);
+    SendEvent(this, action);
     return Task.CompletedTask;
   }
 
   public Task LightsOn()
   {
-    DateTimeOffset now = DateTimeOffset.Now;
-    logger.LogInformation("{time:G}: Remote is signalling LightsOn", now);
-    SendEvent(this, RemoteAction.Create(now, RemoteActionType.LightsOn));
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightsOnCmd);
+    logger.LogInformation("{time:G}: Remote is signalling LightsOn", action.Time);
+    SendEvent(this, action);
     return Task.CompletedTask;
   }
 
   public Task LightsOff()
   {
-    DateTimeOffset now = DateTimeOffset.Now;
-    logger.LogInformation("{time:G}: Remote is signalling LightsOff", now);
-    SendEvent(this, RemoteAction.Create(now, RemoteActionType.LightsOff));
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightsOffCmd);
+    logger.LogInformation("{time:G}: Remote is signalling LightsOff", action.Time);
+    SendEvent(this, action);
     return Task.CompletedTask;
   }
 
-  private void SendEvent(object sender, RemoteAction action)
+  public Task Refresh()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.RefreshCmd);
+    logger.LogInformation("{time:G}: Remote is signalling GetStatus", action.Time);
+    SendEvent(this, action);
+    return Task.CompletedTask;
+  }
+
+  private void SendEvent(object sender, RemoteActionMessage action)
     => RemoteEvent?.Invoke(sender, action);
 }

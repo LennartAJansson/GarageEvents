@@ -1,7 +1,6 @@
 namespace DoorWorker;
 
 using GarageEvents.Door;
-using GarageEvents.Messages;
 using GarageEvents.Types;
 
 public class Worker(ILogger<Worker> logger, IDoorHandler handler) : BackgroundService
@@ -31,14 +30,14 @@ public class Worker(ILogger<Worker> logger, IDoorHandler handler) : BackgroundSe
   }
 
   //TODO: Add a listener for the remote event
-  private void Listener(object sender, RemoteAction action)
+  private void Listener(object sender, RemoteActionMessage action)
   {
     switch (action.RemoteActionType)
     {
-      case RemoteActionType.OpenDoor:
+      case RemoteActionType.OpenDoorCmd:
         logger.LogInformation("{time:G}: DoorWorker is doing work for opening the door", action.Time);
         break;
-      case RemoteActionType.CloseDoor:
+      case RemoteActionType.CloseDoorCmd:
         logger.LogInformation("{time:G}: DoorWorker is doing work for closing the door", action.Time);
         break;
     }

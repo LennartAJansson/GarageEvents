@@ -1,9 +1,9 @@
 ﻿namespace GarageEvents.Nats.Remote;
 
-using GarageEvents.Messages;
 using GarageEvents.Nats.Configuration;
 using GarageEvents.Nats.Serializer;
 using GarageEvents.Remote;
+using GarageEvents.State;
 using GarageEvents.Types;
 
 using Microsoft.Extensions.Logging;
@@ -13,7 +13,8 @@ using NATS.Client.Core;
 using NATS.Client.JetStream;
 using NATS.Client.JetStream.Models;
 
-public class NatsRemote : IRemote, IDisposable
+public class NatsRemote
+  : IRemote, IDisposable
 {
   private readonly ILogger<NatsRemote> logger;
   public bool IsConnected { get; private set; }
@@ -25,7 +26,7 @@ public class NatsRemote : IRemote, IDisposable
 
   public event RemoteActionDelegate? RemoteEvent;
 
-  public NatsRemote(ILogger<NatsRemote> logger, NatsServiceConfig config, ILoggerFactory loggerFactory)
+  public NatsRemote(ILogger<NatsRemote> logger, NatsServiceConfig config, ILoggerFactory loggerFactory, CurrentStateHandler state)
   {
     this.logger = logger;
     NatsOpts opts = NatsOpts.Default with
@@ -69,7 +70,7 @@ public class NatsRemote : IRemote, IDisposable
       INatsJSConsumer consumer = await jetStream.CreateOrUpdateConsumerAsync(config.Stream, new ConsumerConfig(config.Consumer));
       while (!cts.Token.IsCancellationRequested)
       {
-        await foreach (NatsJSMsg<RemoteAction> jsMsg in consumer!.ConsumeAsync<RemoteAction>(serializer: new GarageActionSerializer(), cancellationToken: cts.Token))
+        await foreach (NatsJSMsg<RemoteActionMessage> jsMsg in consumer!.ConsumeAsync<RemoteActionMessage>(serializer: new GarageActionSerializer(), cancellationToken: cts.Token))
         {
           if (jsMsg.Data is not null)
           {
@@ -82,40 +83,47 @@ public class NatsRemote : IRemote, IDisposable
   }
   public async Task OpenDoor()
   {
-    DateTimeOffset now = DateTimeOffset.Now;
-    logger.LogInformation("{now:G}: Remote is signalling OpenDoor", now);
-    _ = await SendEvent(RemoteAction.Create(now, RemoteActionType.OpenDoor));
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.OpenDoorCmd);
+    logger.LogInformation("{now:G}: Remote is signalling OpenDoor", action.Time);
+    _ = await SendEvent(action);
   }
 
   public async Task CloseDoor()
   {
-    DateTimeOffset now = DateTimeOffset.Now;
-    logger.LogInformation("{now:G}: Remote is signalling CloseDoor", now);
-    _ = await SendEvent(RemoteAction.Create(now, RemoteActionType.CloseDoor));
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.CloseDoorCmd);
+    logger.LogInformation("{now:G}: Remote is signalling CloseDoor", action.Time);
+    _ = await SendEvent(action);
   }
 
   public async Task LightsOn()
   {
-    DateTimeOffset now = DateTimeOffset.Now;
-    logger.LogInformation("{now:G}: Remote is signalling LightsOn", now);
-    _ = await SendEvent(RemoteAction.Create(now, RemoteActionType.LightsOn));
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightsOnCmd);
+    logger.LogInformation("{now:G}: Remote is signalling LightsOn", action.Time);
+    _ = await SendEvent(action);
   }
 
   public async Task LightsOff()
   {
-    DateTimeOffset now = DateTimeOffset.Now;
-    logger.LogInformation("{now:G}: Remote is signalling LightsOff", now);
-    _ = await SendEvent(RemoteAction.Create(now, RemoteActionType.LightsOff));
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightsOffCmd);
+    logger.LogInformation("{now:G}: Remote is signalling LightsOff", action.Time);
+    _ = await SendEvent(action);
   }
 
-  private async Task<ulong> SendEvent(RemoteAction action)
+  public async Task Refresh()
+  {
+    RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.RefreshCmd);
+    logger.LogInformation("{now:G}: Remote is signalling GetStatus", action.Time);
+    _ = await SendEvent(action);
+  }
+
+  private async Task<ulong> SendEvent(RemoteActionMessage action)
   {
     if (jetStream is null)
     {
       return 0;
     }
 
-    PubAckResponse ack = await jetStream.PublishAsync<RemoteAction>(subject: config.Subject, serializer: new GarageActionSerializer(), data: action);
+    PubAckResponse ack = await jetStream.PublishAsync<RemoteActionMessage>(subject: config.Subject, serializer: new GarageActionSerializer(), data: action);
     ack.EnsureSuccess();
 
     return ack.Seq;
@@ -134,19 +142,9 @@ public class NatsRemote : IRemote, IDisposable
           _ = connection.DisposeAsync().AsTask().Wait(connection.Opts.CommandTimeout);
         }
       }
-
-      // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-      // TODO: set large fields to null
       disposedValue = true;
     }
   }
-
-  // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-  // ~NatsRemote()
-  // {
-  //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-  //     Dispose(disposing: false);
-  // }
 
   public void Dispose()
   {

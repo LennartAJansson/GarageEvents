@@ -1,6 +1,6 @@
 ﻿namespace GarageEvents.Door;
 
-using GarageEvents.Remote;
+using GarageEvents.Types;
 
 public interface IDoorHandler
 {

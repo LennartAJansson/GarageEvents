@@ -1,11 +1,6 @@
 using GarageEvents.Extensions;
 using GarageEvents.Nats.Extensions;
 using GarageEvents.Remote;
-//TODO Make sure that remote is not listening, only sending messages
-//TODO Make sure that garage is listening for status from door and light, only receiving messages
-//TODO Make sure that light is listening to remote, but also can send message about current status
-//TODO Make sure that door is listening to remote, but also can send message about current status
-//TODO Maybe status should be sent frequently to the garage
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -17,15 +12,12 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder
         .AllowAnyHeader()
         .AllowAnyOrigin()));
 
-//From NET8.0 they started to use port 8080 and 8081 as default ports for http and https
 if (builder.Environment.IsProduction())
 {
   _ = builder.WebHost.UseSetting("http_port", "80");
   _ = builder.WebHost.UseSetting("https_port", "443");
 }
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -33,7 +25,6 @@ WebApplication app = builder.Build();
 
 app.UseCors();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 }
@@ -44,7 +35,6 @@ _ = app.UseSwaggerUI();
 
 app.MapPost("/opendoor", async (IRemote handler) =>
 {
-  //Inject the remote control to send message to garage and door
   await handler.OpenDoor();
 })
 .WithName("OpenDoor")
@@ -52,7 +42,6 @@ app.MapPost("/opendoor", async (IRemote handler) =>
 
 app.MapPost("/lightson", async (IRemote handler) =>
 {
-  //Inject the remote control to send message to garage and light
   await handler.LightsOn();
 })
 .WithName("LightsOn")
@@ -60,7 +49,6 @@ app.MapPost("/lightson", async (IRemote handler) =>
 
 app.MapPost("/lightsoff", async (IRemote handler) =>
 {
-  //Inject the remote control to send message to garage and light
   await handler.LightsOff();
 })
 .WithName("LightsOff")
@@ -68,10 +56,16 @@ app.MapPost("/lightsoff", async (IRemote handler) =>
 
 app.MapPost("/closedoor", async (IRemote handler) =>
 {
-  //Inject the remote control to send message to garage and door
   await handler.CloseDoor();
 })
 .WithName("CloseDoor")
+.WithOpenApi();
+
+app.MapPost("/refresh", async (IRemote handler) =>
+{
+  await handler.Refresh();
+})
+.WithName("Refresh")
 .WithOpenApi();
 
 app.Run();

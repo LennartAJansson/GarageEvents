@@ -1,6 +1,6 @@
 ﻿namespace GarageEvents.Base;
-using GarageEvents.Messages;
 using GarageEvents.Remote;
+using GarageEvents.Types;
 
 public abstract class Listener(IRemote remote)
 {
@@ -32,7 +32,7 @@ public abstract class Listener(IRemote remote)
     }
   }
 
-  public abstract void OnRemoteEvent(object sender, RemoteAction action);
+  public abstract void OnRemoteEvent(object sender, RemoteActionMessage action);
 
   public void StopListen() => Stop();
 }

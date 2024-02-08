@@ -1,9 +1,6 @@
 ﻿namespace GarageEvents.Remote;
 
-using GarageEvents.Messages;
-
-//Delegate for the garage event
-public delegate void RemoteActionDelegate(object sender, RemoteAction action);
+using GarageEvents.Types;
 
 public interface IRemote
 {
@@ -16,4 +13,10 @@ public interface IRemote
   Task LightsOn();
 
   Task LightsOff();
+
+  Task Refresh();
+  Task DoorIsOpen();
+  Task DoorIsClosed();
+  Task LightIsOn();
+  Task LightIsOff();
 }

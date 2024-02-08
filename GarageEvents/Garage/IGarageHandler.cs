@@ -1,5 +1,5 @@
 ﻿namespace GarageEvents.Garage;
-using GarageEvents.Remote;
+using GarageEvents.Types;
 
 //Interface for interacting with the garage
 public interface IGarageHandler

@@ -1,5 +1,5 @@
 ﻿namespace GarageEvents.Light;
-using GarageEvents.Remote;
+using GarageEvents.Types;
 
 public interface ILightHandler
 {
