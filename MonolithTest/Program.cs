@@ -7,10 +7,16 @@ using GarageEvents.Remote;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.Services
-  .AddGarageComponents()
+  .AddGarageComponents();
+
 //TODO: Uncomment to run external events through NATS server
-.AddNatsRemote(builder.Configuration)
-;
+var test = builder.Configuration["USENATS"];
+if (test == "true")
+{
+  builder.Services
+  .AddNatsRemote(builder.Configuration);
+}
+
 IHost host = builder.Build();
 
 using IServiceScope scope = host.Services.CreateScope();

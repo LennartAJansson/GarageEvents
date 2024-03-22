@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "monolithtest": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "USENATS": "false"
+      },
+      "dotnetRunMessages": true
+    },
+    "monolittest-nats": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "USENATS": "true"
+      }
+    }
+  }
+}
