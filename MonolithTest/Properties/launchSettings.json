@@ -13,7 +13,8 @@
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development",
         "USENATS": "true"
-      }
+      },
+      "dotnetRunMessages": true
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json"
