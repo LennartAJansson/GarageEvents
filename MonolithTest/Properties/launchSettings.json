@@ -1,17 +1,20 @@
 {
   "profiles": {
-    "monolithtest": {
+    "MonolithTest": {
       "commandName": "Project",
       "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
         "USENATS": "false"
       },
       "dotnetRunMessages": true
     },
-    "monolittest-nats": {
+    "MonolithTest-Nats": {
       "commandName": "Project",
       "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
         "USENATS": "true"
       }
     }
-  }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json"
 }
