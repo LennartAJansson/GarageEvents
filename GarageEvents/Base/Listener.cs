@@ -1,10 +1,10 @@
 ﻿namespace GarageEvents.Base;
+
 using GarageEvents.Remote;
 using GarageEvents.Types;
 
 public abstract class Listener(IRemote remote)
 {
-  protected readonly IRemote remote = remote;
   private RemoteActionDelegate? callback = null;
 
   protected void Start(RemoteActionDelegate? callback)
@@ -20,6 +20,8 @@ public abstract class Listener(IRemote remote)
     }
   }
 
+  public void StopListen() => Stop();
+  
   protected void Stop()
   {
     if (callback is not null)
@@ -33,6 +35,4 @@ public abstract class Listener(IRemote remote)
   }
 
   public abstract void OnRemoteEvent(object sender, RemoteActionMessage action);
-
-  public void StopListen() => Stop();
 }

@@ -3,10 +3,11 @@ using GarageEvents.Garage;
 using GarageEvents.Nats.Extensions;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+
 builder.Services
   .AddGarageComponents()
-  .AddNatsRemote(builder.Configuration)
-  ;
+  .AddNatsRemote(builder.Configuration);
+
 IHost host = builder.Build();
 
 using IServiceScope scope = host.Services.CreateScope();

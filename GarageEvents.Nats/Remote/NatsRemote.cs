@@ -45,12 +45,14 @@ public class NatsRemote
   private ValueTask Connection_ConnectionDisconnected(object? sender, NatsEventArgs args)
   {
     IsConnected = false;
+    
     return new ValueTask();
   }
 
   private ValueTask Connection_ConnectionOpened(object? sender, NatsEventArgs args)
   {
     IsConnected = true;
+
     return new ValueTask();
   }
 
@@ -80,69 +82,73 @@ public class NatsRemote
       }
     }
   }
+
+  //Commands to send to the garage
   public async Task OpenDoor()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.OpenDoorCmd);
-    logger.LogInformation("{now:G}: Remote is signalling OpenDoor", action.Time);
+    logger.LogInformation("{now:G}: Remote is signalling command OpenDoor", action.Time);
     _ = await SendEvent(action);
   }
 
   public async Task CloseDoor()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.CloseDoorCmd);
-    logger.LogInformation("{now:G}: Remote is signalling CloseDoor", action.Time);
+    logger.LogInformation("{now:G}: Remote is signalling command CloseDoor", action.Time);
     _ = await SendEvent(action);
   }
 
   public async Task LightsOn()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightsOnCmd);
-    logger.LogInformation("{now:G}: Remote is signalling LightsOn", action.Time);
+    logger.LogInformation("{now:G}: Remote is signalling command LightsOn", action.Time);
     _ = await SendEvent(action);
   }
 
   public async Task LightsOff()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightsOffCmd);
-    logger.LogInformation("{now:G}: Remote is signalling LightsOff", action.Time);
+    logger.LogInformation("{now:G}: Remote is signalling command LightsOff", action.Time);
     _ = await SendEvent(action);
   }
 
   public async Task Refresh()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.RefreshCmd);
-    logger.LogInformation("{now:G}: Remote is signalling GetStatus", action.Time);
+    logger.LogInformation("{now:G}: Remote is signalling command GetStatus", action.Time);
     _ = await SendEvent(action);
   }
 
+  //Events from the garage
   public async Task DoorIsOpen()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.DoorIsOpen);
-    logger.LogInformation("{now:G}: Remote is signalling DoorIsOpen", action.Time);
+    logger.LogInformation("{now:G}: Remote is signalling event DoorIsOpen", action.Time);
     _ = await SendEvent(action);
   }
 
   public async Task DoorIsClosed()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.DoorIsClosed);
-    logger.LogInformation("{now:G}: Remote is signalling DoorIsClosed", action.Time);
+    logger.LogInformation("{now:G}: Remote is signalling event DoorIsClosed", action.Time);
     _ = await SendEvent(action);
   }
 
   public async Task LightIsOn()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightIsOn);
-    logger.LogInformation("{now:G}: Remote is signalling LightIsOn", action.Time);
+    logger.LogInformation("{now:G}: Remote is signalling event LightIsOn", action.Time);
     _ = await SendEvent(action);
   }
 
   public async Task LightIsOff()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightIsOff);
-    logger.LogInformation("{now:G}: Remote is signalling LightIsOff", action.Time);
+    logger.LogInformation("{now:G}: Remote is signalling event LightIsOff", action.Time);
     _ = await SendEvent(action);
   }
 
+  //Internal send event method
   private async Task<ulong> SendEvent(RemoteActionMessage action)
   {
     if (jetStream is null)

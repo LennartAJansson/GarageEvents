@@ -10,8 +10,6 @@ using Microsoft.Extensions.Logging;
 public class GarageHandler(ILogger<GarageHandler> logger, IRemote remote)
   : Listener(remote), IGarageHandler
 {
-  private readonly ILogger<GarageHandler> logger = logger;
-
   public bool DoorIsOpen { get; set; } = false;
   public bool LightsAreOn { get; set; } = false;
 

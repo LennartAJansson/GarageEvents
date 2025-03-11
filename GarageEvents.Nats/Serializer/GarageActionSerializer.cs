@@ -10,10 +10,15 @@ using NATS.Client.Core;
 
 internal class GarageActionSerializer : INatsSerializer<RemoteActionMessage>
 {
+  public INatsSerializer<RemoteActionMessage> CombineWith(INatsSerializer<RemoteActionMessage> next)
+    //TODO New added method to combine serializers
+    => throw new NotImplementedException();
+
   public RemoteActionMessage? Deserialize(in ReadOnlySequence<byte> buffer)
   {
     byte[] buf = buffer.ToArray();
     RemoteActionMessage? action = JsonSerializer.Deserialize<RemoteActionMessage>(buf);
+
     return action;
   }
 

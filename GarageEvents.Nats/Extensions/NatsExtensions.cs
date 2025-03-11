@@ -18,10 +18,13 @@ public static class NatsExtensions
   {
     NatsServiceConfig? config = configuration.GetSection("Nats").Get<NatsServiceConfig>()
       ?? throw new ArgumentException("NATS config not found");
+    _ = services.AddSingleton(config);
+    
     _ = services.Remove(services.First(x => x.ServiceType == typeof(IRemote)));
     _ = services.AddSingleton<IRemote, NatsRemote>();
-    _ = services.AddSingleton(config);
+    
     _ = services.AddNats();
+    
     return services;
   }
 }

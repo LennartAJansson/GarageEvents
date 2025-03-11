@@ -6,6 +6,7 @@ public interface IGarageHandler
 {
   public bool DoorIsOpen { get; set; }
   public bool LightsAreOn { get; set; }
+
   IGarageHandler StartListen(RemoteActionDelegate? callback);
   void StopListen();
 }

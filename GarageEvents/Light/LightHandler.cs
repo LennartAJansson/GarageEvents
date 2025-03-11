@@ -10,11 +10,10 @@ using Microsoft.Extensions.Logging;
 public class LightHandler(ILogger<LightHandler> logger, IRemote remote)
   : Listener(remote), ILightHandler
 {
-  private readonly ILogger<LightHandler> logger = logger;
-
   public ILightHandler StartListen(RemoteActionDelegate? callback)
   {
     base.Start(callback);
+
     return this;
   }
 

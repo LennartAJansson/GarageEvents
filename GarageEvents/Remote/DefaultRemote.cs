@@ -16,71 +16,80 @@ public class DefaultRemote(ILogger<DefaultRemote> logger)
   public Task OpenDoor()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.OpenDoorCmd);
-    logger.LogInformation("{time:G}: Remote is signalling OpenDoor", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling command OpenDoor", action.Time);
     SendEvent(this, action);
+
     return Task.CompletedTask;
   }
 
   public Task CloseDoor()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.CloseDoorCmd);
-    logger.LogInformation("{time:G}: Remote is signalling CloseDoor", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling command CloseDoor", action.Time);
     SendEvent(this, action);
+    
     return Task.CompletedTask;
   }
 
   public Task LightsOn()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightsOnCmd);
-    logger.LogInformation("{time:G}: Remote is signalling LightsOn", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling command LightsOn", action.Time);
     SendEvent(this, action);
+
     return Task.CompletedTask;
   }
 
   public Task LightsOff()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightsOffCmd);
-    logger.LogInformation("{time:G}: Remote is signalling LightsOff", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling command LightsOff", action.Time);
     SendEvent(this, action);
+
     return Task.CompletedTask;
   }
 
   public Task Refresh()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.RefreshCmd);
-    logger.LogInformation("{time:G}: Remote is signalling Refresh", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling command Refresh", action.Time);
     SendEvent(this, action);
+
     return Task.CompletedTask;
   }
   public Task DoorIsOpen()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.DoorIsOpen);
-    logger.LogInformation("{time:G}: Remote is signalling DoorIsOpen", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling event DoorIsOpen", action.Time);
     SendEvent(this, action);
+
     return Task.CompletedTask;
   }
 
   public Task DoorIsClosed()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.DoorIsClosed);
-    logger.LogInformation("{time:G}: Remote is signalling DoorIsClosed", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling event DoorIsClosed", action.Time);
     SendEvent(this, action);
+
     return Task.CompletedTask;
   }
 
   public Task LightIsOn()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightIsOn);
-    logger.LogInformation("{time:G}: Remote is signalling LightIsOn", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling event LightIsOn", action.Time);
     SendEvent(this, action);
+    
     return Task.CompletedTask;
   }
 
   public Task LightIsOff()
   {
     RemoteActionMessage action = RemoteActionMessage.Create(RemoteActionType.LightIsOff);
-    logger.LogInformation("{time:G}: Remote is signalling LightIsOff", action.Time);
+    logger.LogInformation("{time:G}: Remote is signalling event LightIsOff", action.Time);
     SendEvent(this, action);
+
     return Task.CompletedTask;
   }
 

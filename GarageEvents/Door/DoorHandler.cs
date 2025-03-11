@@ -10,11 +10,10 @@ using Microsoft.Extensions.Logging;
 public class DoorHandler(ILogger<DoorHandler> logger, IRemote remote)
   : Listener(remote), IDoorHandler
 {
-  private readonly ILogger<DoorHandler> logger = logger;
-
   public IDoorHandler StartListen(RemoteActionDelegate? callback)
   {
     base.Start(callback);
+
     return this;
   }
 

@@ -1,7 +1,7 @@
 # Garage events
-This solution contains a small experiment in how to use events at different levels. The solution consists of an imaginary garage with a door and lights. The solution is built to be used in > .NET8 and is using Microsoft.Extensions for logging, configuration, dependency injection etc.  
+This solution contains a small experiment in how to use events at different levels. The solution consists of an imaginary garage with a door and lights. The solution is built to be used in > .NET9 and is using Microsoft.Extensions for logging, configuration, dependency injection etc.  
 
-The applications to test the garage is made as two different solutions, one microservice oriented with four separate applications and one modular monolith.  
+The applications to test the garage is made as three different parts, one kubernetes oriented with three separate backgroundservices and a remote api, one simple with four isolated console applications, and one modular monolith.  
 
 The door can be opened and closed and the light could be turned on and off. A Remote control is used to control the door and the light. It all circles around the events that are raised when the remote is triggered.  
 
